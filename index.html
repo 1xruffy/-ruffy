@@ -7,160 +7,318 @@
 <link rel="icon" href="max.png">
 
 <style>
-/* === RESET === */
 * { margin:0; padding:0; box-sizing:border-box; font-family: Arial, Helvetica, sans-serif; }
-body { height:100vh; background:black; overflow:hidden; color:white; cursor: url('cursor.png') 16 16, auto; }
+body {
+    height:100vh;
+    background:black;
+    overflow:hidden;
+    color:white;
+    cursor:url('cursor.png') 16 16, auto;
+}
 
-/* === VIDEO BACKGROUND === */
-#bg-video { position: fixed; inset:0; width:100%; height:100%; object-fit:cover; z-index:-4; }
+/* VIDEO */
+#bg-video {
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:-4;
+}
 
-/* === OVERLAY === */
-.overlay { position: fixed; inset:0; background: rgba(0,0,0,0.65); backdrop-filter: blur(10px); z-index:-3; }
+/* OVERLAY */
+.overlay {
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.65);
+    backdrop-filter:blur(10px);
+    z-index:-3;
+}
 
-/* === PARTICLES === */
-canvas { position: fixed; inset:0; z-index:-2; pointer-events:none; will-change: transform; }
+/* PARTICLES */
+canvas {
+    position:fixed;
+    inset:0;
+    z-index:-2;
+    pointer-events:none;
+}
 
-/* === CARD === */
+/* CARD */
 .card {
-    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) scale(0.9);
-    padding:35px 45px; border-radius:26px;
-    background: rgba(0,0,0,0.55); backdrop-filter: blur(20px);
-    text-align:center; opacity:0;
-    animation: cardIn 1.2s ease forwards, rgbBorder 6s linear infinite;
-    box-shadow: 0 0 40px rgba(0,255,255,0.3);
-    border: 2px solid transparent;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%) scale(.9);
+    padding:35px 45px;
+    border-radius:26px;
+    background:rgba(0,0,0,.55);
+    backdrop-filter:blur(20px);
+    text-align:center;
+    opacity:0;
+    animation:cardIn 1.2s ease forwards, rgbBorder 6s linear infinite;
+    box-shadow:0 0 40px rgba(0,255,255,.3);
 }
 
-/* === PROFILE === */
-.profile { width:120px; height:120px; border-radius:50%; border:3px solid white; margin-bottom:15px; transition: transform 0.4s, box-shadow 0.4s; }
-.profile:hover { transform: scale(1.08) rotate(-2deg); box-shadow:0 0 25px cyan, 0 0 40px magenta; }
+/* PROFILE */
+.profile {
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    border:3px solid white;
+    margin-bottom:15px;
+    transition:.4s;
+}
+.profile:hover {
+    transform:scale(1.08) rotate(-2deg);
+    box-shadow:0 0 25px cyan,0 0 40px magenta;
+}
 
-/* === NAME === */
-.name-row { display:flex; justify-content:center; align-items:center; gap:8px; margin-bottom:10px; }
-.name { font-size:28px; font-weight:bold; }
+/* NAME */
+.name-row {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+}
+.name {
+    font-size:28px;
+    font-weight:bold;
+}
 
-/* === DESCRIPTION === */
-.desc { font-size:14px; opacity:0.85; margin-bottom:20px; }
+/* DESC */
+.desc {
+    font-size:14px;
+    opacity:.85;
+    margin:12px 0 20px;
+}
 
-/* === LINKS === */
-.links { display:flex; justify-content:center; gap:20px; }
-.links img { width:45px; transition: transform 0.3s, filter 0.3s; }
-.links img:hover { transform: scale(1.2); filter: drop-shadow(0 0 12px cyan); }
+/* LINKS */
+.links {
+    display:flex;
+    justify-content:center;
+    gap:20px;
+}
+.links img {
+    width:45px;
+    transition:.3s;
+}
+.links img:hover {
+    transform:scale(1.2);
+    filter:drop-shadow(0 0 12px cyan);
+}
 
-/* === FOUNDER BADGE === */
-.founder-container { position: relative; display:inline-block; margin-top:15px; }
-.founder { width:60px; transition: transform 0.3s, filter 0.3s; }
-.founder:hover { transform: scale(1.2); filter: drop-shadow(0 0 15px gold) drop-shadow(0 0 25px orange); }
+/* FOUNDER */
+.founder-container {
+    margin-top:15px;
+    position:relative;
+}
+.founder {
+    width:60px;
+    transition:.3s;
+}
+.founder:hover {
+    transform:scale(1.2);
+    filter:drop-shadow(0 0 15px gold);
+}
 .founder-text {
-    position:absolute; bottom:110%; left:50%; transform:translateX(-50%);
-    background: rgba(0,0,0,0.7); backdrop-filter: blur(6px);
-    padding:6px 14px; border-radius:14px; font-size:12px; color:gold;
-    opacity:0; pointer-events:none; white-space:nowrap;
-    transition: opacity 0.3s, transform 0.3s;
+    position:absolute;
+    bottom:110%;
+    left:50%;
+    transform:translateX(-50%);
+    background:rgba(0,0,0,.7);
+    padding:6px 14px;
+    border-radius:14px;
+    font-size:12px;
+    color:gold;
+    opacity:0;
+    transition:.3s;
 }
-.founder-container:hover .founder-text { opacity:1; transform:translateX(-50%) translateY(-5px); }
+.founder-container:hover .founder-text {
+    opacity:1;
+    transform:translate(-50%,-6px);
+}
 
-/* === ENTER SCREEN === */
+/* STATS */
+.stats {
+    display:flex;
+    justify-content:center;
+    gap:25px;
+    margin-top:20px;
+    font-size:18px;
+}
+.stat {
+    padding:6px 14px;
+    border-radius:14px;
+    background:rgba(255,255,255,.08);
+    cursor:pointer;
+    user-select:none;
+    transition:.2s;
+}
+.stat:hover {
+    transform:scale(1.1);
+}
+.liked {
+    color:red;
+    box-shadow:0 0 20px red;
+}
+
+/* ENTER */
 #enter {
-    position: fixed; inset:0; background:black;
-    display:flex; justify-content:center; align-items:center;
-    font-size:24px; letter-spacing:2px; z-index:999;
-    animation:pulse 1.5s infinite; cursor:pointer;
+    position:fixed;
+    inset:0;
+    background:black;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:24px;
+    letter-spacing:2px;
+    z-index:999;
+    cursor:pointer;
+    animation:pulse 1.5s infinite;
 }
-#enter.fade { animation: enterOut 1s ease forwards; }
+#enter.fade {
+    animation:enterOut 1s forwards;
+}
 
-/* === VOLUME SLIDER === */
-.volume { position:fixed; bottom:20px; right:20px; background:rgba(0,0,0,0.6); backdrop-filter:blur(10px); padding:10px 14px; border-radius:14px; box-shadow:0 0 20px rgba(0,255,255,0.3); }
-.volume input { width:120px; }
+/* VOLUME */
+.volume {
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    background:rgba(0,0,0,.6);
+    backdrop-filter:blur(10px);
+    padding:10px 14px;
+    border-radius:14px;
+}
 
-/* === ANIMATIONS === */
-@keyframes pulse { 0%{opacity:0.4;}50%{opacity:1;}100%{opacity:0.4;} }
-@keyframes enterOut { to{opacity:0; transform:scale(1.2); filter:blur(20px);} }
-@keyframes cardIn { to{opacity:1; transform:translate(-50%,-50%) scale(1);} }
-@keyframes rgbBorder { 0%{box-shadow:0 0 15px red;}33%{box-shadow:0 0 20px cyan;}66%{box-shadow:0 0 20px lime;}100%{box-shadow:0 0 15px red;} }
-
-/* === MOBILE === */
-@media (max-width:600px){ .card{width:90%; padding:25px;} .profile{width:95px;height:95px;} }
+/* ANIMS */
+@keyframes pulse {0%{opacity:.4}50%{opacity:1}100%{opacity:.4}}
+@keyframes enterOut {to{opacity:0;transform:scale(1.2);filter:blur(20px)}}
+@keyframes cardIn {to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+@keyframes rgbBorder {
+    0%{box-shadow:0 0 15px red}
+    33%{box-shadow:0 0 20px cyan}
+    66%{box-shadow:0 0 20px lime}
+    100%{box-shadow:0 0 15px red}
+}
 </style>
 </head>
 
 <body>
 
-<!-- CLICK TO ENTER -->
 <div id="enter">CLICK TO ENTER</div>
 
-<!-- BACKGROUND VIDEO -->
-<video id="bg-video" autoplay muted loop playsinline preload="auto">
+<video id="bg-video" autoplay muted loop playsinline>
     <source src="background.mp4" type="video/mp4">
 </video>
 
-<!-- PARTICLES -->
 <canvas id="particles"></canvas>
 <div class="overlay"></div>
 
-<!-- AUDIO -->
 <audio id="music" src="music.mp3" loop></audio>
 <audio id="hoverSound" src="hover.mp3"></audio>
 <audio id="clickSound" src="click.mp3"></audio>
 
-<!-- MAIN CARD -->
 <div class="card">
     <img src="max.png" class="profile">
+
     <div class="name-row">
         <img src="tick.png" width="20">
         <div class="name">Ruffy</div>
     </div>
+
     <div class="desc">Developer • Creator • Private Projects</div>
+
     <div class="links">
         <img src="discord.png" onclick="openLink('https://discord.gg/mVfUa8mq')">
         <img src="v3.png" onclick="openLink('https://discord.gg/mVfUa8mq')">
     </div>
+
     <div class="founder-container">
         <img src="founder.png" class="founder">
         <div class="founder-text">Founder</div>
     </div>
+
+    <div class="stats">
+        <div class="stat" id="likeBtn">❤️ <span id="likes">0</span></div>
+        <div class="stat">👁️ <span id="views">0</span></div>
+    </div>
 </div>
 
-<!-- VOLUME SLIDER -->
 <div class="volume">
-    🔊 <input type="range" min="0" max="1" step="0.01" value="0.5" id="vol">
+    🔊 <input type="range" id="vol" min="0" max="1" step="0.01" value="0.5">
 </div>
 
 <script>
-/* === CLICK TO ENTER + MUSIC === */
+/* ENTER */
 const enter = document.getElementById("enter");
 const music = document.getElementById("music");
 music.volume = 0.5;
+
 enter.onclick = () => {
     enter.classList.add("fade");
     setTimeout(()=>enter.remove(),1000);
     music.play();
 };
 
-/* === VOLUME CONTROL === */
-document.getElementById("vol").oninput = e => { music.volume = e.target.value; };
+/* VOLUME */
+document.getElementById("vol").oninput = e => music.volume = e.target.value;
 
-/* === HOVER + CLICK SOUNDS === */
+/* SOUNDS */
 const hover = document.getElementById("hoverSound");
 const click = document.getElementById("clickSound");
 document.querySelectorAll("img").forEach(i => i.onmouseenter = () => hover.play());
 function openLink(url){ click.play(); window.open(url,"_blank"); }
 
-/* === PARTICLE SYSTEM (optimized) === */
+/* LIKE + VIEW SYSTEM */
+const likeBtn = document.getElementById("likeBtn");
+const likesEl = document.getElementById("likes");
+const viewsEl = document.getElementById("views");
+
+let views = localStorage.getItem("views");
+views = views ? Number(views)+1 : 1;
+localStorage.setItem("views", views);
+viewsEl.textContent = views;
+
+let likes = localStorage.getItem("likes") || 0;
+let liked = localStorage.getItem("liked");
+
+likesEl.textContent = likes;
+if(liked) likeBtn.classList.add("liked");
+
+likeBtn.onclick = () => {
+    if(liked) return;
+    likes++;
+    localStorage.setItem("likes", likes);
+    localStorage.setItem("liked", "true");
+    likesEl.textContent = likes;
+    likeBtn.classList.add("liked");
+};
+
+/* PARTICLES */
 const c = document.getElementById("particles");
 const ctx = c.getContext("2d");
-function resizeCanvas(){ c.width = window.innerWidth; c.height = window.innerHeight; }
-resizeCanvas(); window.addEventListener("resize", resizeCanvas);
+function resize(){ c.width=innerWidth; c.height=innerHeight }
+resize(); addEventListener("resize",resize);
 
-let particles = Array.from({length:40},()=>({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*2+1,dx:(Math.random()-0.5)*0.5,dy:(Math.random()-0.5)*0.5}));
+let particles = Array.from({length:40},()=>({
+    x:Math.random()*c.width,
+    y:Math.random()*c.height,
+    r:Math.random()*2+1,
+    dx:(Math.random()-.5)*.5,
+    dy:(Math.random()-.5)*.5
+}));
+
 function loop(){
     ctx.clearRect(0,0,c.width,c.height);
     particles.forEach(p=>{
         p.x+=p.dx; p.y+=p.dy;
         if(p.x<0||p.x>c.width) p.dx*=-1;
         if(p.y<0||p.y>c.height) p.dy*=-1;
-        ctx.fillStyle="rgba(0,255,255,0.5)";
-        ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();
+        ctx.fillStyle="rgba(0,255,255,.5)";
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fill();
     });
     requestAnimationFrame(loop);
 }
